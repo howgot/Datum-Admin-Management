@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DIM.Services
+namespace Datum.Stock.Application
 {
     public class Class1
     {

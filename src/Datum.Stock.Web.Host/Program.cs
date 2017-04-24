@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 
-namespace DIM.Web
+namespace Datum.Stock.Web.Host
 {
     public class Program
     {

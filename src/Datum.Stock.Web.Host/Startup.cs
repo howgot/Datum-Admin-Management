@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace DIM.Web
+namespace Datum.Stock.Web.Host
 {
     public class Startup
     {
