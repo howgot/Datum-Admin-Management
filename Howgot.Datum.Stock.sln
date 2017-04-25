@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Datum.Stock.Web.Framework",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datum.Stock.Web.Host", "src\Datum.Stock.Web.Host\Datum.Stock.Web.Host.csproj", "{FF4B4F02-E59A-4B87-976D-1DEE2BC15FC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datum.Stock.Tests", "test\Datum.Stock.Tests\Datum.Stock.Tests.csproj", "{6D9499B0-5795-4CA6-B4AD-F2B10E36A8DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{FF4B4F02-E59A-4B87-976D-1DEE2BC15FC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF4B4F02-E59A-4B87-976D-1DEE2BC15FC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF4B4F02-E59A-4B87-976D-1DEE2BC15FC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D9499B0-5795-4CA6-B4AD-F2B10E36A8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D9499B0-5795-4CA6-B4AD-F2B10E36A8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D9499B0-5795-4CA6-B4AD-F2B10E36A8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D9499B0-5795-4CA6-B4AD-F2B10E36A8DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,5 +59,6 @@ Global
 		{19DA60C9-7785-4F1F-B272-058591AEEB97} = {4A565686-C082-41DB-9377-0DA2A948B3A4}
 		{FA0BD175-B835-4498-B436-99A9F7B73A63} = {4A565686-C082-41DB-9377-0DA2A948B3A4}
 		{FF4B4F02-E59A-4B87-976D-1DEE2BC15FC8} = {4A565686-C082-41DB-9377-0DA2A948B3A4}
+		{6D9499B0-5795-4CA6-B4AD-F2B10E36A8DF} = {DF66E27A-A504-403E-BC59-B65458D6A209}
 	EndGlobalSection
 EndGlobal

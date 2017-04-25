@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Datum.Stock.Core.Domain.Entities
 {
-
+    [BsonIgnoreExtraElements(Inherited = true)]
     public abstract class Entity : IEntity<string>
     {
         [BsonId]
@@ -19,5 +19,6 @@ namespace Datum.Stock.Core.Domain.Entities
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public virtual DateTime Modified { get; set; }
+
     }
 }

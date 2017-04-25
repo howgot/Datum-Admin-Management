@@ -1,2 +1,4 @@
 # Datum-Image-Management
-Image Management System
+
+Image Stock Management System
+
