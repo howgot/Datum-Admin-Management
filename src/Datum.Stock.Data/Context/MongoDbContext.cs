@@ -10,7 +10,7 @@ namespace Datum.Stock.Data.Context
 
         static MongoDbContext()
         {
-            var connectionString = Core.StockConsts.ConnectionStringName;
+            var connectionString = "mongodb://localhost:27017/StockDb?readPreference=primary"; //Core.StockConsts.ConnectionStringName;
             var mongoUrl = new MongoUrl(connectionString);
             Client = new MongoClient(mongoUrl);
             Database = Client.GetDatabase(mongoUrl.DatabaseName);

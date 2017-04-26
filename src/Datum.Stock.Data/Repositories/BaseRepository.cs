@@ -47,7 +47,6 @@ namespace Datum.Stock.Data.Repositories
             DbFactory = dbFactory;
         }
 
-
         public IEnumerator<TEntity> GetEnumerator()
         {
             return Entities.AsQueryable().GetEnumerator();
