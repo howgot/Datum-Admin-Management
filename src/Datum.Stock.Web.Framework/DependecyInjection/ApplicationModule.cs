@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using Datum.Stock.Application;
 
-namespace Datum.Stock.Web.Framework.Modules
+namespace Datum.Stock.Web.Framework.DependecyInjection
 {
     public class ApplicationModule : Autofac.Module
     {

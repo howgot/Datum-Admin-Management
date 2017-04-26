@@ -8,9 +8,9 @@ namespace Datum.Stock.Data
 {
     public class DbFactory : IDbFactory
     {
-        private MongoDbContext _dbContext;
+        private IMongoDbContext _dbContext;
 
-        public MongoDbContext Init()
+        public IMongoDbContext Init()
         {
             return _dbContext ?? (_dbContext = new MongoDbContext());
         }

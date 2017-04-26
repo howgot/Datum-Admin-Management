@@ -1,10 +1,5 @@
 using Autofac;
-using Datum.Stock.Core.Domain;
-using Datum.Stock.Data.Repositories;
-using Datum.Stock.Web.Framework.Modules;
-using System;
-using System.Reflection;
-using Xunit;
+using Datum.Stock.Web.Framework.DependecyInjection;
 
 namespace Datum.Stock.Tests
 {

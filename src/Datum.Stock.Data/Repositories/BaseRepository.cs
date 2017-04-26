@@ -17,17 +17,10 @@ namespace Datum.Stock.Data.Repositories
     {
         #region Properties
 
-        private MongoDbContext _dbContext;
+        private IMongoDbContext _dbContext;
         private IMongoCollection<TEntity> _entities;
-
-        protected IDbFactory DbFactory
-        {
-            get;
-            private set;
-        }
-
-
-        protected MongoDbContext DbContext => _dbContext ?? (_dbContext = DbFactory.Init());
+        private IDbFactory DbFactory { get; }
+        private IMongoDbContext DbContext => _dbContext ?? (_dbContext = DbFactory.Init());
 
         /// <summary>
         /// Entities

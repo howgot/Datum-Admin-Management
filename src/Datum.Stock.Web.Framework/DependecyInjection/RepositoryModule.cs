@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
+﻿using Autofac;
 using MongoDB.Driver;
 using Datum.Stock.Data;
 using Datum.Stock.Data.Interfaces;
 using Datum.Stock.Data.Repositories;
 using Datum.Stock.Core.Domain;
+using Datum.Stock.Data.Context;
 
-namespace Datum.Stock.Web.Framework.Modules
+namespace Datum.Stock.Web.Framework.DependecyInjection
 {
     public class RepositoryModule : Autofac.Module
     {
@@ -17,6 +15,7 @@ namespace Datum.Stock.Web.Framework.Modules
             //General
             builder.RegisterType<MongoClient>().As<IMongoClient>();
             builder.RegisterType<DbFactory>().As<IDbFactory>();
+            builder.RegisterType<MongoDbContext>().As<IMongoDbContext>();
 
             //Repositories
             builder.RegisterGeneric(typeof(BaseRepository<>)).As(typeof(IRepository<>));

@@ -1,9 +1,10 @@
 ﻿using System;
 using MongoDB.Driver;
+using Datum.Stock.Data.Interfaces;
 
 namespace Datum.Stock.Data.Context
 {
-    public class MongoDbContext
+    public class MongoDbContext: IMongoDbContext
     {
         public static readonly IMongoClient Client;
         public static readonly IMongoDatabase Database;
