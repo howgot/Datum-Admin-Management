@@ -1,11 +1,8 @@
-﻿using Datum.Stock.Core.Entities;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Datum.Stock.Core.Domain.Entities
+namespace Datum.Stock.Core.Domain
 {
     [BsonIgnoreExtraElements(Inherited = true)]
     public abstract class Entity : IEntity<string>
@@ -14,9 +11,11 @@ namespace Datum.Stock.Core.Domain.Entities
         [BsonRepresentation(BsonType.ObjectId)]
         public virtual string Id { get; set; }
 
+        [BsonElement("created_time")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public virtual DateTime Created { get; set; }
 
+        [BsonElement("modified_time")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]
         public virtual DateTime Modified { get; set; }
 

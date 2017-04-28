@@ -1,4 +1,4 @@
-﻿using Datum.Stock.Core.Domain.Entities;
+﻿using Datum.Stock.Core.Domain;
 
 namespace Datum.Stock.Tests
 {

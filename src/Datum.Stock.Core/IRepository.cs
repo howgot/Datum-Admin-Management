@@ -1,14 +1,11 @@
-﻿using Datum.Stock.Core.Entities;
-using MongoDB.Driver;
-using System;
+﻿using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Datum.Stock.Application
+namespace Datum.Stock.Core
 {
-    public interface IBaseService<T, TKey> : IQueryable<T> where T : IEntity<TKey>
+    public interface IRepository<T, TKey> : IQueryable<T> where T : IEntity<TKey>
     {
         #region SELECT
 
@@ -54,6 +51,7 @@ namespace Datum.Stock.Application
         /// <param name="ids"></param>
         /// <returns></returns>
         Task<IEnumerable<T>> GetManyByIdsAsync(IEnumerable<TKey> ids);
+
         /// <summary>
         /// 
         /// </summary>
@@ -89,26 +87,26 @@ namespace Datum.Stock.Application
         /// </summary>
         /// <param name="entity">The entity to add.</param>
         /// <returns>The added entity including its new ObjectId.</returns>
-        void Add(T entity);
+        void Insert(T entity);
 
         /// <summary>
         /// Adds the new entity in the repository.
         /// </summary>
         /// <param name="entity">The entity to add.</param>
         /// <returns>The added entity including its new ObjectId.</returns>
-        Task AddAsync(T entity);
+        Task InsertAsync(T entity);
 
         /// <summary>
         /// Adds the new entities in the repository.
         /// </summary>
         /// <param name="entities">The entities of type T.</param>
-        void AddMany(IEnumerable<T> entities);
+        void InsertMany(IEnumerable<T> entities);
 
         /// <summary>
         /// Adds the new entities in the repository.
         /// </summary>
         /// <param name="entities">The entities of type T.</param>
-        Task AddManyAsync(IEnumerable<T> entities);
+        Task InsertManyAsync(IEnumerable<T> entities);
 
         #endregion
 
@@ -257,11 +255,10 @@ namespace Datum.Stock.Application
     }
 
     /// <summary>
-    /// IRepository definition.
+    /// IRepository definition for default.
     /// </summary>
     /// <typeparam name="T">The type contained in the repository.</typeparam>
-    /// <remarks>Entities are assumed to use strings for Id's.</remarks>
-    public interface IBaseService<T> : IQueryable<T>, IBaseService<T, string>
+    public interface IRepository<T> : IQueryable<T>, IRepository<T, string>
         where T : IEntity<string>
     { }
 }

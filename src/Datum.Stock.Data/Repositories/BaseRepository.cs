@@ -1,14 +1,11 @@
-﻿using Datum.Stock.Core.Domain;
-using Datum.Stock.Core.Entities;
+﻿using Datum.Stock.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using MongoDB.Driver;
 using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Datum.Stock.Data.Context;
 using Datum.Stock.Data.Interfaces;
 
 namespace Datum.Stock.Data.Repositories
@@ -142,7 +139,7 @@ namespace Datum.Stock.Data.Repositories
 
         #region INSERT
 
-        public virtual void Add(TEntity entity)
+        public virtual void Insert(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -155,7 +152,7 @@ namespace Datum.Stock.Data.Repositories
             Entities.InsertOne(entity);
         }
 
-        public virtual async Task AddAsync(TEntity entity)
+        public virtual async Task InsertAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -168,7 +165,7 @@ namespace Datum.Stock.Data.Repositories
             await Entities.InsertOneAsync(entity);
         }
 
-        public virtual void AddMany(IEnumerable<TEntity> entities)
+        public virtual void InsertMany(IEnumerable<TEntity> entities)
         {
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
@@ -183,7 +180,7 @@ namespace Datum.Stock.Data.Repositories
             Entities.InsertMany(updatedEntities);
         }
 
-        public virtual async Task AddManyAsync(IEnumerable<TEntity> entities)
+        public virtual async Task InsertManyAsync(IEnumerable<TEntity> entities)
         {
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));

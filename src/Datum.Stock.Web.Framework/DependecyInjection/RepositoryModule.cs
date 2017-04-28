@@ -3,7 +3,7 @@ using MongoDB.Driver;
 using Datum.Stock.Data;
 using Datum.Stock.Data.Interfaces;
 using Datum.Stock.Data.Repositories;
-using Datum.Stock.Core.Domain;
+using Datum.Stock.Core;
 using Datum.Stock.Data.Context;
 
 namespace Datum.Stock.Web.Framework.DependecyInjection

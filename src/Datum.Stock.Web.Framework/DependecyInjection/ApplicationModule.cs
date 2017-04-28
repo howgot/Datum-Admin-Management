@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Datum.Stock.Application;
+using Datum.Stock.Core.Domain;
 
 namespace Datum.Stock.Web.Framework.DependecyInjection
 {
@@ -11,7 +12,6 @@ namespace Datum.Stock.Web.Framework.DependecyInjection
             builder.RegisterModule(new RepositoryModule());
 
             //Application Services
-            builder.RegisterGeneric(typeof(BaseService<>)).As(typeof(IBaseService<>));
 
             base.Load(builder);
         }

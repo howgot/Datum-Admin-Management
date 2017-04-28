@@ -1,23 +1,15 @@
-﻿using Datum.Stock.Core.Domain;
-using Datum.Stock.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Datum.Stock.Core;
 using Xunit;
 using Autofac;
-using Moq;
-using Datum.Stock.Data.Interfaces;
-using Datum.Stock.Data;
-using Datum.Stock.Core.Entities;
-using Datum.Stock.Core.Domain.Entities;
+using MongoDB.Driver;
 
 namespace Datum.Stock.Tests.RepositoryTests
 {
 
     public class BaseRepositoryTest : BaseTest
     {
+        bool IsAsync = true;
+
         private readonly IRepository<TestEntity> _repository;
 
         public BaseRepositoryTest()
@@ -26,17 +18,60 @@ namespace Datum.Stock.Tests.RepositoryTests
         }
 
         [Fact]
-        public void Should_add_item()
+        public void Should_Add_Item()
         {
             var newItem = new TestEntity()
             {
                 Title = "Hello World!"
             };
 
-            _repository.Add(newItem);
+            //Insert 
+            if (IsAsync)
+                _repository.InsertAsync(newItem).Wait();
+            else
+                _repository.Insert(newItem);
 
             //ID check
             Assert.True(!string.IsNullOrWhiteSpace(newItem.Id));
+        }
+
+        [Fact]
+        public void Should_Update_Item()
+        {
+
+            var newItem = new TestEntity()
+            {
+                Title = "Hello"
+            };
+
+            //Insert 
+            if (IsAsync)
+                _repository.InsertAsync(newItem).Wait();
+            else
+                _repository.Insert(newItem);
+
+            //ID check
+            Assert.True(!string.IsNullOrWhiteSpace(newItem.Id));
+
+            //Update
+            var updateDefinition = Builders<TestEntity>.Update.Set(e => e.Title, "Hello World!");
+            _repository.UpdateOneById(newItem.Id, updateDefinition);
+
+            //Get updated entity
+            if (IsAsync)
+            {
+                var task = _repository.GetOneByIdAsync(newItem.Id);
+                task.Wait();
+                newItem = task.Result;
+            }
+            else
+                newItem = _repository.GetOneById(newItem.Id);
+
+            //Title Check
+            Assert.True(string.Equals(newItem.Title, "Hello World!"));
+
+            //Modified Check
+            Assert.True(newItem.Modified >= newItem.Created);
         }
     }
 }

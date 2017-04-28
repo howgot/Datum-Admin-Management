@@ -1,7 +1,6 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 
-namespace Datum.Stock.Core.Entities
+namespace Datum.Stock.Core
 {
     public interface IEntity<TKey>
     {
@@ -9,7 +8,7 @@ namespace Datum.Stock.Core.Entities
         /// Gets or sets the Id of the Entity.
         /// </summary>
         /// <value>Id of the Entity.</value>
-        [BsonId]
+
         TKey Id { get; set; }
 
         DateTime Created { get; set; }
