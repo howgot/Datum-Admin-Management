@@ -5,6 +5,7 @@ using Datum.Stock.Data.Interfaces;
 using Datum.Stock.Data.Repositories;
 using Datum.Stock.Core;
 using Datum.Stock.Data.Context;
+using Datum.Stock.Core.Data;
 
 namespace Datum.Stock.Web.Framework.DependecyInjection
 {

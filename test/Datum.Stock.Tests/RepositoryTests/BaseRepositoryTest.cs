@@ -2,6 +2,7 @@
 using Xunit;
 using Autofac;
 using MongoDB.Driver;
+using Datum.Stock.Core.Data;
 
 namespace Datum.Stock.Tests.RepositoryTests
 {

@@ -1,4 +1,5 @@
 using Autofac;
+using Datum.Stock.Application.Mapping;
 using Datum.Stock.Web.Framework.DependecyInjection;
 
 namespace Datum.Stock.Tests
@@ -15,8 +16,11 @@ namespace Datum.Stock.Tests
             var builder = new ContainerBuilder();
             builder.RegisterModule(new RepositoryModule());
             builder.RegisterModule(new ApplicationModule());
-
+           
             container = builder.Build();
+
+            //Mapper
+            DatumMapperModule.Load();
         }
 
        

@@ -12,8 +12,4 @@
     <ProjectReference Include="..\Datum.Stock.Core\Datum.Stock.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
 </Project>

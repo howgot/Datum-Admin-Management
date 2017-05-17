@@ -14,6 +14,8 @@ namespace Datum.Stock.Core.Domain.Authorization
 
         public string Password { get; set; }
 
+        public string Salt { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -27,4 +29,5 @@ namespace Datum.Stock.Core.Domain.Authorization
         [BsonIgnore]
         public virtual string FullName => $"{FirstName} {LastName}";
     }
+
 }

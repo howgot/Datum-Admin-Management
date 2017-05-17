@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Datum.Stock.Data.Interfaces;
+using Datum.Stock.Core.Data;
 
 namespace Datum.Stock.Data.Repositories
 {
@@ -60,24 +61,24 @@ namespace Datum.Stock.Data.Repositories
         #region SELECT
         public virtual TEntity GetOneById(TKey id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("Id", id);
-            return Entities.Find(filter).SingleOrDefault();
+            var filter = Builders<TEntity>.Filter.Eq(e => e.Id, id);
+            return Entities.Find(filter).FirstOrDefault();
         }
 
         public virtual async Task<TEntity> GetOneByIdAsync(TKey id)
         {
-            var filter = Builders<TEntity>.Filter.Eq("Id", id);
-            return await Entities.Find(filter).SingleOrDefaultAsync();
+            var filter = Builders<TEntity>.Filter.Eq(e => e.Id, id);
+            return await Entities.Find(filter).FirstOrDefaultAsync();
         }
 
         public virtual TEntity GetOne(FilterDefinition<TEntity> filter)
         {
-            return Entities.Find(filter).SingleOrDefault();
+            return Entities.Find(filter).FirstOrDefault();
         }
 
         public virtual async Task<TEntity> GetOneAsync(FilterDefinition<TEntity> filter)
         {
-            return await Entities.Find(filter).SingleOrDefaultAsync();
+            return await Entities.Find(filter).FirstOrDefaultAsync();
         }
 
         public virtual IEnumerable<TEntity> GetManyByIds(IEnumerable<TKey> ids)
@@ -85,7 +86,7 @@ namespace Datum.Stock.Data.Repositories
             if (ids == null)
                 throw new ArgumentNullException(nameof(ids));
 
-            var filter = Builders<TEntity>.Filter.In("Id", ids);
+            var filter = Builders<TEntity>.Filter.In(e => e.Id, ids);
 
             return Entities.Find(filter).ToList();
         }
@@ -95,7 +96,7 @@ namespace Datum.Stock.Data.Repositories
             if (ids == null)
                 throw new ArgumentNullException(nameof(ids));
 
-            var filter = Builders<TEntity>.Filter.In("Id", ids);
+            var filter = Builders<TEntity>.Filter.In(e => e.Id, ids);
 
             return await Entities.Find(filter).ToListAsync();
         }
@@ -349,7 +350,7 @@ namespace Datum.Stock.Data.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
 
-            var filter = new FilterDefinitionBuilder<TEntity>().Eq("Id", id);
+            var filter = new FilterDefinitionBuilder<TEntity>().Eq(e => e.Id, id);
 
             var result = Entities.DeleteOne(filter);
 
@@ -363,7 +364,7 @@ namespace Datum.Stock.Data.Repositories
             if (id == null)
                 throw new ArgumentNullException(nameof(id));
 
-            var filter = new FilterDefinitionBuilder<TEntity>().Eq("Id", id);
+            var filter = new FilterDefinitionBuilder<TEntity>().Eq(e => e.Id, id);
 
             var result = await Entities.DeleteOneAsync(filter);
 
@@ -421,7 +422,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual long Count()
         {
-            var filter = Builders<TEntity>.Filter.Exists("Id", true);
+            var filter = Builders<TEntity>.Filter.Exists(e => e.Id, true);
 
 
             return Entities.Count(filter);
@@ -429,7 +430,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task<long> CountAsync()
         {
-            var filter = Builders<TEntity>.Filter.Exists("Id", true);
+            var filter = Builders<TEntity>.Filter.Exists(e => e.Id, true);
 
             return await Entities.CountAsync(filter);
         }
@@ -439,7 +440,7 @@ namespace Datum.Stock.Data.Repositories
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var filter = Builders<TEntity>.Filter.Eq("Id", entity.Id);
+            var filter = Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
 
             return Entities.Count(filter) > 0;
         }
@@ -450,7 +451,7 @@ namespace Datum.Stock.Data.Repositories
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            var filter = Builders<TEntity>.Filter.Eq("Id", entity.Id);
+            var filter = Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
 
             return await Entities.CountAsync(filter) > 0;
         }

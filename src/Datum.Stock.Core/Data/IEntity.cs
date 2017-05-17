@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Datum.Stock.Core
+namespace Datum.Stock.Core.Data
 {
     public interface IEntity<TKey>
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Datum.Stock.Core
+namespace Datum.Stock.Core.Data
 {
     public interface IRepository<T, TKey> : IQueryable<T> where T : IEntity<TKey>
     {

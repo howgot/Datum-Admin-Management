@@ -1,7 +1,7 @@
 ﻿using Datum.Stock.Core.Domain.Authorization;
 using System.Collections.Generic;
 
-namespace Datum.Stock.Core.Domain.Image
+namespace Datum.Stock.Core.Domain.Media
 {
     public class StockImage : Entity
     {

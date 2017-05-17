@@ -5,6 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ApiControllerTests\**" />
+    <Compile Remove="ApplicationTest\**" />
+    <Compile Remove="WebControllerTests\**" />
+    <EmbeddedResource Remove="ApiControllerTests\**" />
+    <EmbeddedResource Remove="ApplicationTest\**" />
+    <EmbeddedResource Remove="WebControllerTests\**" />
+    <None Remove="ApiControllerTests\**" />
+    <None Remove="ApplicationTest\**" />
+    <None Remove="WebControllerTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
@@ -12,12 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationTest\" />
-    <Folder Include="ApiControllerTests\" />
-    <Folder Include="WebControllerTests\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\src\Datum.Stock.Application\Datum.Stock.Application.csproj" />
     <ProjectReference Include="..\..\src\Datum.Stock.Data\Datum.Stock.Data.csproj" />
     <ProjectReference Include="..\..\src\Datum.Stock.Web.Framework\Datum.Stock.Web.Framework.csproj" />
   </ItemGroup>

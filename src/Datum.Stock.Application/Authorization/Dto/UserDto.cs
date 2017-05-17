@@ -5,26 +5,15 @@ using System.Text;
 
 namespace Datum.Stock.Application.Authorization.Dto
 {
-    public class UserDto
+    public class UserDto : BaseDto
     {
-        [Required]
-        [StringLength(50)]
-        public string UserName { get; set; }
 
-        [Required]
-        [StringLength(255)]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(12)]
         public string Password { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string FirstName { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string LastName { get; set; }
 
         public bool IsAdmin { get; set; }
