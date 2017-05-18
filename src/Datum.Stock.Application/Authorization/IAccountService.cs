@@ -1,4 +1,4 @@
-﻿using Datum.Stock.Application.Authorization.Dto;
+﻿
 using Datum.Stock.Core.Domain.Authorization;
 using System;
 using System.Collections.Generic;
@@ -9,18 +9,12 @@ namespace Datum.Stock.Application.Authorization
 {
     public interface IAccountService
     {
-        Task<bool> Create(UserDto user);
+        Task<bool> Create(string email, string password);
 
-        Task<bool> Update(UserDto user);
+        Task<bool> Remove(string email);
 
-        Task<bool> IsExist(UserDto user);
+        Task<User> GetUserByEmail(string email);
 
-        Task<bool> IsValid(string email, string password);
-
-        Task<bool> Remove(UserDto user);
-
-        Task<UserDto> GetUserByEmail(string email);
-
-        Task<UserDto> GetUserById(string Id);
+        Task<User> GetUserById(string Id);
     }
 }

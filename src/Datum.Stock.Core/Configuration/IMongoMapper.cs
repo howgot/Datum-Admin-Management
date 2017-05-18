@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Datum.Stock.Core.Configuration
 {
-    public interface ISettings
+    public interface IMongoMapper<TEntity>
     {
+        void Configure();
     }
 }

@@ -1,33 +1,33 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using AspNetCore.Identity.MongoDB;
+using Datum.Stock.Core.Data;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using System;
+using AspNetCore.Identity.MongoDB.Models;
 
 namespace Datum.Stock.Core.Domain.Authorization
 {
-    public class User : Entity
+    public class User : MongoIdentityUser
     {
-        public User()
+        public User(string userName) : base(userName)
         {
-            Roles = new List<Role>();
         }
 
-        public string Email { get; set; }
+        public User(string userName, string email) : base(userName, email)
+        {
+        }
 
-        public string Password { get; set; }
-
-        public string Salt { get; set; }
+        public User(string userName, MongoUserEmail email) : base(userName, email)
+        {
+        }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public string IsAdmin { get; set; }
 
-        public bool IsActive { get; set; }
-
-        public IEnumerable<Role> Roles { get; set; }
-
-        [BsonIgnore]
-        public virtual string FullName => $"{FirstName} {LastName}";
+   
     }
 
 }

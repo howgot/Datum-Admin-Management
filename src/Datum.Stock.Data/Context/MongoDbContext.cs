@@ -24,7 +24,7 @@ namespace Datum.Stock.Data.Context
         /// <returns></returns>
         public IMongoCollection<TEntity> GetCollection<TEntity>()
         {
-            return Database.GetCollection<TEntity>(typeof(TEntity).Name.ToLower() + "_collection");
+            return Database.GetCollection<TEntity>(typeof(TEntity).Name.ToLower() + "s");
         }
     }
 }

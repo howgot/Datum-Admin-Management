@@ -5,12 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.Identity.MongoDB" Version="1.0.0-rc3" />
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="1.1.2" />
     <PackageReference Include="MongoDB.Driver" Version="2.4.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Domain\Article\" />
   </ItemGroup>
 
 </Project>

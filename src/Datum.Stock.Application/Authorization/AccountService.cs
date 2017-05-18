@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Datum.Stock.Application.Authorization.Dto;
+using Datum.Stock.Application.Authorization;
 using Datum.Stock.Application.Authorization.Validators;
 using Datum.Stock.Core;
 using Datum.Stock.Core.Data;
 using Datum.Stock.Core.Domain.Authorization;
 using Datum.Stock.Core.Helpers;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,99 +16,97 @@ namespace Datum.Stock.Application.Authorization
     public class AccountService : IAccountService
     {
         #region Fields
-        private readonly IRepository<User> _userRepository;
-        private readonly UserManager _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly UserValidator _userValidator;
         #endregion
 
         #region Ctor
-        public AccountService(IRepository<User> userRepository,
-                              UserManager userManager,
+        public AccountService(UserManager<User> userManager,
                               UserValidator userValidator)
         {
-            _userRepository = userRepository;
             _userManager = userManager;
             _userValidator = userValidator;
         }
+
         #endregion
 
         #region Methods
-        public async Task<bool> Create(UserDto userDto)
+
+        public async Task<bool> Create(string email, string password)
         {
-            //Validate
-            var result = await _userValidator.ValidateAsync(userDto);
+            var result = false;
 
-            if (!result.IsValid)
-                throw new ArgumentException(string.Join(",", result.Errors));
+            try
+            {
+                var user = new User(email, email);
 
-            //Mapping
-            var user = Mapper.Map<User>(userDto);
+                result = (await _userManager.CreateAsync(user, password)).Succeeded;
+            }
+            catch (Exception)
+            {
 
-            //Password
-            user.Salt = PasswordHelper.CreateRandomSalt();
-            user.Password = PasswordHelper.GetHashedPassword(userDto.Password, user.Salt);
-            user.IsActive = true;
-            return await _userManager.RegisterAsync(user);
+                throw;
+            }
+
+            return result;
         }
 
-        public async Task<UserDto> GetUserByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            if (!await _userManager.IsExistByEmailAsync(email))
-                throw new ArgumentException("There isn't any user by this email");
+            User user = null;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                    throw new ArgumentNullException(email);
 
-            var user = await _userManager.GetUserByEmailAsync(email);
+                user = await _userManager.FindByEmailAsync(email);
+            }
+            catch (Exception ex)
+            {
+                //TODO:Log
+            }
+            return user;
+        }
 
-            return Mapper.Map<UserDto>(user);
+        public async Task<User> GetUserById(string Id)
+        {
+            User user = null;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Id))
+                    throw new ArgumentNullException(Id);
+
+                user =  await _userManager.FindByIdAsync(Id);
+            }
+            catch (Exception ex)
+            {
+               //TODO:Log
+            }
+            return user;
+            
+        }
+
+        public async Task<bool> Remove(string email)
+        {
+            var result = false;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(email))
+                    throw new ArgumentNullException(nameof(email));
+
+                var user = await _userManager.FindByEmailAsync(email);
+
+                result = (await _userManager.DeleteAsync(user)).Succeeded;
+            }
+            catch (Exception ex)
+            {
+                //TODO:Log
+            }
+
+            return result;
 
         }
 
-        public async Task<UserDto> GetUserById(string userId)
-        {
-            if (!await _userManager.IsExistAsync(userId))
-                throw new ArgumentException("There isn't any user by this userId");
-
-            var user = await _userManager.GetUserByIdAsync(userId);
-
-            return Mapper.Map<UserDto>(user);
-        }
-
-        public async Task<bool> IsExist(UserDto userDto)
-        {
-            //Validate
-            var result = await _userValidator.ValidateAsync(userDto);
-
-            if (!result.IsValid)
-                throw new ArgumentException(string.Join(",", result.Errors));
-
-            //Mapping
-            var user = Mapper.Map<User>(userDto);
-
-            return await _userManager.IsExistByEmailAsync(user.Email);
-        }
-
-        public async Task<bool> IsValid(string email, string password)
-        {
-            return await _userManager.ValidateUser(email, password);
-        }
-
-        public async Task<bool> Remove(UserDto userDto)
-        {
-            //Validate
-            var result = await _userValidator.ValidateAsync(userDto);
-
-            if (!result.IsValid)
-                throw new ArgumentException(string.Join(",", result.Errors));
-
-            //Mapping
-            var user = Mapper.Map<User>(userDto);
-
-            return await _userManager.Delete(user);
-        }
-
-        public Task<bool> Update(UserDto user)
-        {
-            throw new NotImplementedException();
-        }
         #endregion
     }
 }
