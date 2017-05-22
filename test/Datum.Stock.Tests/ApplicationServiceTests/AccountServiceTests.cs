@@ -1,10 +1,6 @@
 ﻿using Autofac;
 using Datum.Stock.Application.Authorization;
-using Datum.Stock.Application.Authorization.Dto;
-using Datum.Stock.Core.Data;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Datum.Stock.Core.Domain.Authorization;
 using Xunit;
 
 namespace Datum.Stock.Tests.ApplicationServiceTests
@@ -18,42 +14,19 @@ namespace Datum.Stock.Tests.ApplicationServiceTests
             _accountService = container.Resolve<IAccountService>();
         }
 
-        UserDto user = new UserDto()
-        {
-            FirstName = "Test",
-            LastName = "User",
-            Email = "tuser@datum-apps.com",
-            Password = "123456789"
-        };
+        User user = new User("tuser@datum-apps.com", "tuser@datum-apps.com");
+
 
 
         [Fact]
         public async void Create_User()
         {
 
-            var result = await _accountService.Create(user);
+            var result = await _accountService.Create(user.Email.Value, "123456");
 
             Assert.True(result);
 
         }
-
-        [Fact]
-        public async void Check_Exist_User()
-        {
-           
-            //Create
-            await _accountService.Create(user);
-
-            //Check if Exist
-            Assert.True(await _accountService.IsExist(user));
-        }
-
-        [Fact]
-        public async void Validate_User()
-        {
-            Assert.True(await _accountService.IsValid(user.Email, user.Password)); //Valid
-
-            Assert.False(await _accountService.IsValid(user.Email, "31242342"));
-        }
+     
     }
 }

@@ -6,6 +6,6 @@ namespace Datum.Stock.Core
 {
     public class StockConsts
     {
-        public const string ConnectionStringName = "Default";
+        public const string DEFAULT_CONNECTION_STRING = "mongodb://localhost:27017/StockDb?readPreference=primary";
     }
 }

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Datum.Stock.Core\Datum.Stock.Core.csproj" />
+    <ProjectReference Include="..\Datum.Stock.Data\Datum.Stock.Data.csproj" />
   </ItemGroup>
 
 </Project>

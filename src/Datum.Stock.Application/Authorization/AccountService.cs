@@ -1,14 +1,17 @@
-﻿using AutoMapper;
+﻿using AspNetCore.Identity.MongoDB;
+using AutoMapper;
 using Datum.Stock.Application.Authorization;
 using Datum.Stock.Application.Authorization.Validators;
 using Datum.Stock.Core;
 using Datum.Stock.Core.Data;
 using Datum.Stock.Core.Domain.Authorization;
 using Datum.Stock.Core.Helpers;
+using Datum.Stock.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Datum.Stock.Application.Authorization
@@ -16,16 +19,17 @@ namespace Datum.Stock.Application.Authorization
     public class AccountService : IAccountService
     {
         #region Fields
-        private readonly UserManager<User> _userManager;
+        private readonly MongoUserStore<User> _userManager;
         private readonly UserValidator _userValidator;
+      
         #endregion
 
         #region Ctor
-        public AccountService(UserManager<User> userManager,
-                              UserValidator userValidator)
+        public AccountService(UserValidator userValidator, MongoUserStore<User> userManager)
         {
             _userManager = userManager;
             _userValidator = userValidator;
+          
         }
 
         #endregion
@@ -39,8 +43,8 @@ namespace Datum.Stock.Application.Authorization
             try
             {
                 var user = new User(email, email);
-
-                result = (await _userManager.CreateAsync(user, password)).Succeeded;
+                user.SetPasswordHash(password);
+                result = (await _userManager.CreateAsync(user, CancellationToken.None)).Succeeded;
             }
             catch (Exception)
             {
@@ -59,7 +63,7 @@ namespace Datum.Stock.Application.Authorization
                 if (string.IsNullOrWhiteSpace(email))
                     throw new ArgumentNullException(email);
 
-                user = await _userManager.FindByEmailAsync(email);
+                user = await _userManager.FindByNameAsync(email, CancellationToken.None);
             }
             catch (Exception ex)
             {
@@ -76,14 +80,14 @@ namespace Datum.Stock.Application.Authorization
                 if (string.IsNullOrWhiteSpace(Id))
                     throw new ArgumentNullException(Id);
 
-                user =  await _userManager.FindByIdAsync(Id);
+                user = await _userManager.FindByIdAsync(Id, CancellationToken.None);
             }
             catch (Exception ex)
             {
-               //TODO:Log
+                //TODO:Log
             }
             return user;
-            
+
         }
 
         public async Task<bool> Remove(string email)
@@ -94,9 +98,9 @@ namespace Datum.Stock.Application.Authorization
                 if (string.IsNullOrWhiteSpace(email))
                     throw new ArgumentNullException(nameof(email));
 
-                var user = await _userManager.FindByEmailAsync(email);
+                var user = await _userManager.FindByNameAsync(email, CancellationToken.None);
 
-                result = (await _userManager.DeleteAsync(user)).Succeeded;
+                result = (await _userManager.DeleteAsync(user, CancellationToken.None)).Succeeded;
             }
             catch (Exception ex)
             {

@@ -14,7 +14,7 @@ namespace Datum.Stock.Tests
         public BaseTest()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule(new RepositoryModule());
+            builder.RegisterModule(new DataModule());
             builder.RegisterModule(new ApplicationModule());
            
             container = builder.Build();

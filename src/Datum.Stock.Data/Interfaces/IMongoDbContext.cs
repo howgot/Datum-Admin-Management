@@ -8,5 +8,7 @@ namespace Datum.Stock.Data.Interfaces
     public interface IMongoDbContext
     {
         IMongoCollection<T> GetCollection<T>();
+        IMongoClient Client { get; }
+        IMongoDatabase Database { get; }
     }
 }

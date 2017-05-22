@@ -1,21 +1,38 @@
 ﻿using System;
 using MongoDB.Driver;
 using Datum.Stock.Data.Interfaces;
+using Datum.Stock.Core;
 
 namespace Datum.Stock.Data.Context
 {
-    public class MongoDbContext: IMongoDbContext
+    public class MongoDbContext : IMongoDbContext
     {
-        public static readonly IMongoClient Client;
-        public static readonly IMongoDatabase Database;
 
-        static MongoDbContext()
+
+        public IMongoClient Client { get; }
+        public IMongoDatabase Database { get; }
+
+        internal MongoDbContext()
         {
-            var connectionString = "mongodb://localhost:27017/StockDb?readPreference=primary"; //Core.StockConsts.ConnectionStringName;
+            var mongoUrl = new MongoUrl(StockConsts.DEFAULT_CONNECTION_STRING);
+            Client = new MongoClient(mongoUrl);
+            Database = Client.GetDatabase(mongoUrl.DatabaseName);
+        }
+
+        public MongoDbContext(string connectionString)
+        {
             var mongoUrl = new MongoUrl(connectionString);
             Client = new MongoClient(mongoUrl);
             Database = Client.GetDatabase(mongoUrl.DatabaseName);
         }
+
+        public MongoDbContext(string connectionString, string databaseName)
+        {
+            var mongoUrl = new MongoUrl(connectionString);
+            Client = new MongoClient(mongoUrl);
+            Database = Client.GetDatabase(databaseName);
+        }
+
 
         /// <summary>
         /// The private GetCollection method
