@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 namespace Datum.Stock.Web.Framework
 {
-    public class UserClaimsPrincipalFactory<TUser> : Microsoft.AspNetCore.Identity.IUserClaimsPrincipalFactory<TUser>
-             where TUser : class
+    public class UserClaimsPrincipalFactory<TUser> : IUserClaimsPrincipalFactory<TUser> where TUser : class
     {
         public UserClaimsPrincipalFactory(
             UserManager<TUser> userManager,
