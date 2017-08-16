@@ -1,4 +1,4 @@
-# Datum-Admin-Management
+# Datum-Image-Management
 
-Datum Admin Management System
+Datum Image Management System
 
