@@ -21,7 +21,7 @@ namespace Datum.Stock.Application.Authorization
         #region Fields
         private readonly MongoUserStore<User> _userManager;
         private readonly UserValidator _userValidator;
-      
+
         #endregion
 
         #region Ctor
@@ -29,21 +29,21 @@ namespace Datum.Stock.Application.Authorization
         {
             _userManager = userManager;
             _userValidator = userValidator;
-          
+
         }
 
         #endregion
 
         #region Methods
 
-        public async Task<bool> Create(string email, string password)
+        public async Task<bool> Create(CreateUserInput createUserInput)
         {
             var result = false;
 
             try
             {
-                var user = new User(email, email);
-                user.SetPasswordHash(password);
+                var user = new User(createUserInput.Email, createUserInput.Password);
+                user.SetPasswordHash(SecurityHelper.CalculateHash(createUserInput.Password));
                 result = (await _userManager.CreateAsync(user, CancellationToken.None)).Succeeded;
             }
             catch (Exception)
@@ -60,8 +60,7 @@ namespace Datum.Stock.Application.Authorization
             User user = null;
             try
             {
-                if (string.IsNullOrWhiteSpace(email))
-                    throw new ArgumentNullException(email);
+                email.ArgumentNullCheck();
 
                 user = await _userManager.FindByNameAsync(email, CancellationToken.None);
             }
@@ -77,8 +76,7 @@ namespace Datum.Stock.Application.Authorization
             User user = null;
             try
             {
-                if (string.IsNullOrWhiteSpace(Id))
-                    throw new ArgumentNullException(Id);
+                Id.ArgumentNullCheck();
 
                 user = await _userManager.FindByIdAsync(Id, CancellationToken.None);
             }
@@ -90,15 +88,14 @@ namespace Datum.Stock.Application.Authorization
 
         }
 
-        public async Task<bool> Remove(string email)
+        public async Task<bool> Remove(UserInput userInput)
         {
             var result = false;
             try
             {
-                if (string.IsNullOrWhiteSpace(email))
-                    throw new ArgumentNullException(nameof(email));
+                userInput.ArgumentNullCheck();
 
-                var user = await _userManager.FindByNameAsync(email, CancellationToken.None);
+                var user = await _userManager.FindByNameAsync(userInput.Email, CancellationToken.None);
 
                 result = (await _userManager.DeleteAsync(user, CancellationToken.None)).Succeeded;
             }
@@ -109,6 +106,25 @@ namespace Datum.Stock.Application.Authorization
 
             return result;
 
+        }
+
+        public async Task<User> VerifyAndGetUser(LoginUserInput loginUserInput)
+        {
+            User user = null;
+            try
+            {
+                var existingUser = await GetUserByEmail(loginUserInput.Email);
+
+                existingUser.ArgumentNullCheck();
+
+                if (SecurityHelper.CheckMatch(existingUser.PasswordHash, loginUserInput.Password))
+                    user = existingUser;
+            }
+            catch (Exception ex)
+            {
+                //TODO:Log
+            }
+            return user;
         }
 
         #endregion

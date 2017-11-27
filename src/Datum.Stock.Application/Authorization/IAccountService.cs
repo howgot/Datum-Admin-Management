@@ -9,12 +9,14 @@ namespace Datum.Stock.Application.Authorization
 {
     public interface IAccountService
     {
-        Task<bool> Create(string email, string password);
+        Task<bool> Create(CreateUserInput createUserInput);
 
-        Task<bool> Remove(string email);
+        Task<bool> Remove(UserInput userInput);
 
         Task<User> GetUserByEmail(string email);
 
         Task<User> GetUserById(string Id);
+
+        Task<User> VerifyAndGetUser(LoginUserInput loginUserInput);
     }
 }

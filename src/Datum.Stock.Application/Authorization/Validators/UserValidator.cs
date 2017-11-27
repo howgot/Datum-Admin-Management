@@ -10,11 +10,8 @@ namespace Datum.Stock.Application.Authorization.Validators
     {
         public UserValidator()
         {
-            
             //Email
             RuleFor(user => user.Email.Value).NotEmpty().EmailAddress().WithMessage("Check email address right format.");
-
-
         }
     }
 }

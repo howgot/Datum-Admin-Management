@@ -26,21 +26,6 @@ namespace Datum.Stock.Core.Data
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        T GetOne(FilterDefinition<T> filter);
-
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        Task<T> GetOneAsync(FilterDefinition<T> filter);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
         IEnumerable<T> GetManyByIds(IEnumerable<TKey> ids);

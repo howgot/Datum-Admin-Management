@@ -8,7 +8,6 @@ namespace Datum.Stock.Data.Context
     public class MongoDbContext : IMongoDbContext
     {
 
-
         public IMongoClient Client { get; }
         public IMongoDatabase Database { get; }
 
@@ -41,7 +40,7 @@ namespace Datum.Stock.Data.Context
         /// <returns></returns>
         public IMongoCollection<TEntity> GetCollection<TEntity>()
         {
-            return Database.GetCollection<TEntity>(typeof(TEntity).Name.ToLower() + "s");
+            return Database.GetCollection<TEntity>(typeof(TEntity).Name.ToLower() + "_list");
         }
     }
 }

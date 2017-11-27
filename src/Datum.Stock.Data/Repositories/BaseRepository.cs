@@ -61,30 +61,39 @@ namespace Datum.Stock.Data.Repositories
         #region SELECT
         public virtual TEntity GetOneById(TKey id)
         {
+            id.ArgumentNullCheck();
+
             var filter = Builders<TEntity>.Filter.Eq(e => e.Id, id);
+
             return Entities.Find(filter).FirstOrDefault();
         }
 
         public virtual async Task<TEntity> GetOneByIdAsync(TKey id)
         {
+            id.ArgumentNullCheck();
+
             var filter = Builders<TEntity>.Filter.Eq(e => e.Id, id);
+
             return await Entities.Find(filter).FirstOrDefaultAsync();
         }
 
         public virtual TEntity GetOne(FilterDefinition<TEntity> filter)
         {
+            filter.ArgumentNullCheck();
+
             return Entities.Find(filter).FirstOrDefault();
         }
 
         public virtual async Task<TEntity> GetOneAsync(FilterDefinition<TEntity> filter)
         {
+            filter.ArgumentNullCheck();
+
             return await Entities.Find(filter).FirstOrDefaultAsync();
         }
 
         public virtual IEnumerable<TEntity> GetManyByIds(IEnumerable<TKey> ids)
         {
-            if (ids == null)
-                throw new ArgumentNullException(nameof(ids));
+            ids.ArgumentNullCheck();
 
             var filter = Builders<TEntity>.Filter.In(e => e.Id, ids);
 
@@ -93,8 +102,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task<IEnumerable<TEntity>> GetManyByIdsAsync(IEnumerable<TKey> ids)
         {
-            if (ids == null)
-                throw new ArgumentNullException(nameof(ids));
+            ids.ArgumentNullCheck();
 
             var filter = Builders<TEntity>.Filter.In(e => e.Id, ids);
 
@@ -103,16 +111,14 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual IEnumerable<TEntity> GetMany(FilterDefinition<TEntity> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             return Entities.Find(filter).ToList();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetManyAsync(FilterDefinition<TEntity> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             return await Entities.Find(filter).ToListAsync();
         }
@@ -142,8 +148,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void Insert(TEntity entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
+            entity.ArgumentNullCheck();
 
             //Set Created and Modified 
             entity.Created = DateTime.UtcNow;
@@ -155,8 +160,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task InsertAsync(TEntity entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
+            entity.ArgumentNullCheck();
 
             //Set Created and Modified 
             entity.Created = DateTime.UtcNow;
@@ -168,8 +172,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void InsertMany(IEnumerable<TEntity> entities)
         {
-            if (entities == null)
-                throw new ArgumentNullException(nameof(entities));
+            entities.ArgumentNullCheck();
 
             var updatedEntities = entities.AsEnumerable().Select(e =>
             {
@@ -183,8 +186,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task InsertManyAsync(IEnumerable<TEntity> entities)
         {
-            if (entities == null)
-                throw new ArgumentNullException(nameof(entities));
+            entities.ArgumentNullCheck();
 
             var updatedEntities = entities.AsEnumerable().Select(e =>
             {
@@ -202,8 +204,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void UpdateOneById(TKey id, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().Eq("Id", id);
 
@@ -219,8 +220,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task UpdateOneByIdAsync(TKey id, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().Eq("Id", id);
 
@@ -236,11 +236,9 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void UpdateOne(FilterDefinition<TEntity> filter, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             //Set Modified 
             var updatedWithModified = updateDefinition.Set(e => e.Modified, DateTime.UtcNow);
@@ -254,11 +252,9 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task UpdateOneAsync(FilterDefinition<TEntity> filter, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             //Set Modified 
             var updatedWithModified = updateDefinition.Set(e => e.Modified, DateTime.UtcNow);
@@ -271,11 +267,9 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void UpdateManyByIds(IEnumerable<string> ids, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (ids == null)
-                throw new ArgumentNullException(nameof(ids));
+            ids.ArgumentNullCheck();
 
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().In("Id", ids);
 
@@ -289,11 +283,9 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task UpdateManyByIdsAsync(IEnumerable<string> ids, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (ids == null)
-                throw new ArgumentNullException(nameof(ids));
+            ids.ArgumentNullCheck();
 
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().In("Id", ids);
 
@@ -308,11 +300,9 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void UpdateMany(FilterDefinition<TEntity> filter, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
             //Set Modified 
             var updatedWithModified = updateDefinition.Set(e => e.Modified, DateTime.UtcNow);
@@ -325,11 +315,9 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task UpdateManyAsync(FilterDefinition<TEntity> filter, UpdateDefinition<TEntity> updateDefinition)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
-            if (updateDefinition == null)
-                throw new ArgumentNullException(nameof(updateDefinition));
+            updateDefinition.ArgumentNullCheck();
 
             //Set Modified 
             var updatedWithModified = updateDefinition.Set(e => e.Modified, DateTime.UtcNow);
@@ -347,8 +335,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void DeleteById(TKey id)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            id.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().Eq(e => e.Id, id);
 
@@ -361,8 +348,7 @@ namespace Datum.Stock.Data.Repositories
         public virtual async Task DeleteByIdAsync(TKey id)
         {
 
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            id.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().Eq(e => e.Id, id);
 
@@ -375,8 +361,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual void DeleteManyById(IEnumerable<string> ids)
         {
-            if (ids == null)
-                throw new ArgumentNullException(nameof(ids));
+            ids.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().Eq("Id", ids);
 
@@ -388,8 +373,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual async Task DeleteManyByIdAsync(IEnumerable<string> ids)
         {
-            if (ids == null)
-                throw new ArgumentNullException(nameof(ids));
+            ids.ArgumentNullCheck();
 
             var filter = new FilterDefinitionBuilder<TEntity>().Eq("Id", ids);
 
@@ -400,8 +384,7 @@ namespace Datum.Stock.Data.Repositories
         }
         public virtual void DeleteMany(FilterDefinition<TEntity> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             var result = Entities.DeleteMany(filter);
 
@@ -410,8 +393,7 @@ namespace Datum.Stock.Data.Repositories
         }
         public virtual async Task DeleteManyAsync(FilterDefinition<TEntity> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             var result = await Entities.DeleteManyAsync(filter);
 
@@ -423,7 +405,6 @@ namespace Datum.Stock.Data.Repositories
         public virtual long Count()
         {
             var filter = Builders<TEntity>.Filter.Exists(e => e.Id, true);
-
 
             return Entities.Count(filter);
         }
@@ -437,8 +418,7 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual bool Exists(TEntity entity)
         {
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
+            entity.ArgumentNullCheck();
 
             var filter = Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
 
@@ -448,8 +428,7 @@ namespace Datum.Stock.Data.Repositories
         public virtual async Task<bool> ExistsAsync(TEntity entity)
         {
 
-            if (entity == null)
-                throw new ArgumentNullException(nameof(entity));
+            entity.ArgumentNullCheck();
 
             var filter = Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id);
 
@@ -458,16 +437,14 @@ namespace Datum.Stock.Data.Repositories
 
         public virtual bool Exists(FilterDefinition<TEntity> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             return Entities.Count(filter) > 0;
         }
 
         public virtual async Task<bool> ExistsAsync(FilterDefinition<TEntity> filter)
         {
-            if (filter == null)
-                throw new ArgumentNullException(nameof(filter));
+            filter.ArgumentNullCheck();
 
             return await Entities.CountAsync(filter) > 0;
         }

@@ -26,5 +26,7 @@ namespace Datum.Stock.Core.Domain.Media
 
         public User ModifiedBy { get; set; }
 
+        public List<string> Tags { get; set; }
+
     }
 }

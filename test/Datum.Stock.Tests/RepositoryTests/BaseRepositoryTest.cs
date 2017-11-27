@@ -69,7 +69,7 @@ namespace Datum.Stock.Tests.RepositoryTests
                 newItem = _repository.GetOneById(newItem.Id);
 
             //Title Check
-            Assert.True(string.Equals(newItem.Title, "Hello World!"));
+            Assert.Equal("Hello World!", newItem.Title);
 
             //Modified Check
             Assert.True(newItem.Modified >= newItem.Created);

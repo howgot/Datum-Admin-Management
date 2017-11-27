@@ -14,7 +14,7 @@ namespace Datum.Stock.Tests.ApplicationServiceTests
             _accountService = container.Resolve<IAccountService>();
         }
 
-        User user = new User("tuser@datum-apps.com", "tuser@datum-apps.com");
+        User user = new User("user@howgot.com", "user@howgot.com");
 
 
 
