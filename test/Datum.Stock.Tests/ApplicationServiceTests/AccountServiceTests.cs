@@ -21,8 +21,11 @@ namespace Datum.Stock.Tests.ApplicationServiceTests
         [Fact]
         public async void Create_User()
         {
-
-            var result = await _accountService.Create(user.Email.Value, "123456");
+            var input = new CreateUserInput() {
+                Email = user.Email.Value,
+               Password = "123456"
+            };
+            var result = await _accountService.Create(input);
 
             Assert.True(result);
 
