@@ -26,7 +26,7 @@ namespace Datum.Stock.Tests.ApplicationServiceTests
                Password = "123456"
             };
             var result = await _accountService.Create(input);
-
+            //Result should be true
             Assert.True(result);
 
         }
